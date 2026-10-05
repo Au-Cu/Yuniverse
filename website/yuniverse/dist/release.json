@@ -1,0 +1,9 @@
+{
+  "name": "Yuniverse",
+  "version": "1.0.0",
+  "platform": "Windows ARM64",
+  "file": "Yuniverse-Setup-1.0.0.exe",
+  "size": 156627302,
+  "sha256": "e5c5301a3fa647916fa5758f790446f702090f97bd531b1023861f77f30a47d9",
+  "parts": 8
+}

@@ -1,0 +1,8 @@
+{
+  "name": "yuniverse-download-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "preview": "node tools/preview-server.cjs"
+  }
+}

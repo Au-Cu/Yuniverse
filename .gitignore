@@ -1,0 +1,7 @@
+node_modules/
+release/
+.cache/
+build/
+website/yuniverse/dist/downloads/*.bin
+website/yuniverse/*.tar.gz
+*.log

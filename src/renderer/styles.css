@@ -1,0 +1,31 @@
+:root {
+  color-scheme: light dark;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: transparent;
+  user-select: none;
+}
+
+body {
+  display: grid;
+  place-items: stretch;
+}
+
+#pet {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  cursor: grab;
+  image-rendering: auto;
+  touch-action: none;
+}
+
+#pet.dragging {
+  cursor: grabbing;
+}
