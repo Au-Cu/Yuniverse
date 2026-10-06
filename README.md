@@ -4,10 +4,11 @@
 
 ## 下载
 
-- [Yuniverse 官网镜像](https://yuniverse.aucu050410.chatgpt.site)
+- [Yuniverse 官网（Cloudflare）](https://yuniverse411.pages.dev)
+- [Yuniverse 备用镜像（GitHub Pages）](https://au-cu.github.io/Yuniverse/)
 - [GitHub Release v1.0.0](https://github.com/Au-Cu/Yuniverse/releases/tag/v1.0.0)
 
-官网会依次下载并校验 8 个分片，再在浏览器中合成为标准安装程序；GitHub Release 同时提供安装版、便携版和 SHA-256 校验文件。
+官网会依次下载并校验 8 个分片，再在浏览器中合成为标准安装程序；GitHub Release 同时提供安装版、便携版和 SHA-256 校验文件。Cloudflare 官网与 GitHub Pages 备用镜像使用同一份 1.0.0 安装包及校验值。
 
 ## 使用
 
