@@ -5,6 +5,7 @@
 ## 下载
 
 - [Yuniverse 官网（Cloudflare）](https://yuniverse411.pages.dev)
+- [小白安装指南](https://yuniverse411.pages.dev/#install)
 - [Yuniverse 备用镜像（GitHub Pages）](https://au-cu.github.io/Yuniverse/)
 - [GitHub Release v1.0.0](https://github.com/Au-Cu/Yuniverse/releases/tag/v1.0.0)
 

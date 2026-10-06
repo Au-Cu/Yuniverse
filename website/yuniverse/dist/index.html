@@ -20,7 +20,7 @@
     </a>
     <nav aria-label="主导航">
       <a href="#members">成员</a>
-      <a href="#features">功能</a>
+      <a href="#install">安装指南</a>
       <a class="nav-download" href="#download">下载</a>
     </nav>
   </header>
@@ -155,9 +155,192 @@
             <code id="release-hash">7689effe2ff151b03da77b4f938aef1968c0f32b203f681ab49eb549e5f3e853</code>
             <button id="copy-hash" type="button">复制</button>
           </div>
-          <p class="safety-note">若系统显示来源或开发者提示，请先核对上方哈希值，再决定是否继续安装。</p>
+          <p class="safety-note">若系统显示来源或开发者提示，请先核对上方哈希值，再按照下方的 <a href="#install">小白安装指南</a> 操作。</p>
           <p class="safety-note">分片下载遇到问题时，可前往 <a href="https://github.com/Au-Cu/Yuniverse/releases/tag/v1.0.0" rel="noreferrer">GitHub Release</a> 获取安装版或便携版。</p>
         </div>
+      </div>
+    </section>
+
+    <section class="install-guide section-shell" id="install">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span></span> First-time setup</p>
+        <h2>第一次安装，<br>照着做就好</h2>
+        <p>不同浏览器和系统版本的按钮文字可能略有变化。认准下面标出的关键词即可，不需要关闭浏览器或系统的安全保护。</p>
+      </div>
+
+      <aside class="guide-safety reveal">
+        <strong>先判断警告属于哪一种</strong>
+        <p>只有提示“此文件不常下载”“无法验证发布者”或“未知发布者”，并且文件来自本官网、文件名与 SHA-256 均一致时，才继续保留或运行。如果明确提示“检测到病毒”“恶意软件”或“会损坏电脑”，请立即停止，不要绕过。</p>
+      </aside>
+
+      <div class="guide-steps">
+        <article class="guide-step reveal">
+          <span class="guide-number">01</span>
+          <div class="guide-step-body">
+            <p class="guide-kicker">先别急着下载</p>
+            <h3>查看电脑的 CPU 架构</h3>
+            <div class="guide-grid two-columns">
+              <div class="guide-card">
+                <span class="guide-os">Windows</span>
+                <h4>设置 → 系统 → 系统信息</h4>
+                <ol>
+                  <li>按 <kbd>Win</kbd> + <kbd>I</kbd> 打开“设置”。</li>
+                  <li>进入“系统”，向下找到“系统信息”或“关于”。</li>
+                  <li>在“设备规格”里找到“系统类型”。</li>
+                </ol>
+                <div class="architecture-map">
+                  <p><strong>基于 x64 的处理器</strong><span>选 Windows x86_64</span></p>
+                  <p><strong>基于 ARM 的处理器</strong><span>选 Windows ARM64</span></p>
+                  <p><strong>基于 x86 的处理器</strong><span>32 位，当前不支持</span></p>
+                </div>
+                <p class="guide-footnote">Intel 和 AMD 的普通 64 位电脑通常都选 x86_64。AMD 处理器并不等于 ARM64。</p>
+              </div>
+              <div class="guide-card">
+                <span class="guide-os">macOS</span>
+                <h4> → 关于本机</h4>
+                <ol>
+                  <li>点击屏幕左上角的苹果菜单 。</li>
+                  <li>选择“关于本机”。</li>
+                  <li>查看显示的是“芯片”还是“处理器”。</li>
+                </ol>
+                <div class="architecture-map">
+                  <p><strong>芯片：Apple M 系列</strong><span>选 macOS ARM64</span></p>
+                  <p><strong>处理器：Intel</strong><span>选 macOS x86_64</span></p>
+                </div>
+                <p class="guide-footnote">Apple Silicon、M 系列和 ARM64 在这里指同一类 Mac。</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="guide-step reveal">
+          <span class="guide-number">02</span>
+          <div class="guide-step-body">
+            <p class="guide-kicker">回到下载区域</p>
+            <h3>选择对应安装包并等待下载完成</h3>
+            <div class="package-table" role="table" aria-label="架构与安装包文件名对照">
+              <div class="package-row package-head" role="row"><span>你的电脑</span><span>选择按钮</span><span>最终文件</span></div>
+              <div class="package-row" role="row"><span>Intel / AMD Windows</span><span>Windows x86_64</span><code>Yuniverse-Setup-1.0.0-Windows-x64.exe</code></div>
+              <div class="package-row" role="row"><span>Windows on ARM</span><span>Windows ARM64</span><code>Yuniverse-Setup-1.0.0.exe</code></div>
+              <div class="package-row" role="row"><span>Apple M 系列 Mac</span><span>macOS ARM64</span><code>Yuniverse-macOS-arm64-1.0.0.dmg</code></div>
+              <div class="package-row" role="row"><span>Intel Mac</span><span>macOS x86_64</span><code>Yuniverse-macOS-x64-1.0.0.dmg</code></div>
+            </div>
+            <ol class="plain-steps">
+              <li>在上方下载区点选与你电脑一致的系统和架构。</li>
+              <li>点击绿色下载按钮，并保持网页打开。网站会依次下载并校验分片。</li>
+              <li>看到“完成”后，浏览器才会保存一个完整的 <code>.exe</code> 或 <code>.dmg</code> 文件。</li>
+            </ol>
+            <a class="guide-jump" href="#download">回到下载区 ↑</a>
+          </div>
+        </article>
+
+        <article class="guide-step reveal">
+          <span class="guide-number">03</span>
+          <div class="guide-step-body">
+            <p class="guide-kicker">浏览器可能先询问你</p>
+            <h3>下载被提示“不常下载”时怎么办</h3>
+            <div class="browser-grid">
+              <details open>
+                <summary>Microsoft Edge</summary>
+                <ol>
+                  <li>打开右上角“下载”按钮，或按 <kbd>Ctrl</kbd> + <kbd>J</kbd>。</li>
+                  <li>在 Yuniverse 下载项旁点击 <strong>…</strong>，选择“保留”。</li>
+                  <li>若再次询问，点“显示详细信息”“查看更多”或“更多”，再选“仍然保留”。部分 Edge 版本会把它放在“删除”按钮旁的下拉菜单里。</li>
+                  <li>如果出现“报告此文件安全”，可在核对来源和哈希后向 Microsoft 反馈误报。</li>
+                </ol>
+              </details>
+              <details>
+                <summary>Google Chrome</summary>
+                <ol>
+                  <li>打开右上角“下载”按钮，或按 <kbd>Ctrl</kbd> + <kbd>J</kbd>。</li>
+                  <li>如果 Chrome 提供“检查恶意软件”，优先先执行检查。</li>
+                  <li>确认来源和哈希无误后，根据版本选择“保留”“下载可疑文件”或“仍要下载”。不要为了下载而关闭安全浏览。</li>
+                </ol>
+              </details>
+              <details>
+                <summary>Firefox / 其他浏览器</summary>
+                <ol>
+                  <li>打开下载列表，找到被阻止的 Yuniverse 文件。</li>
+                  <li>展开该下载项的详情；确认只是“不常见”或“无法验证”后，选择“允许下载”或“保留”。</li>
+                  <li>公司或学校管理的浏览器可能不允许绕过，请联系管理员，不要修改组织安全策略。</li>
+                </ol>
+              </details>
+              <details>
+                <summary>Safari</summary>
+                <ol>
+                  <li>下载完成后，从 Safari 的下载按钮或 Finder 的“下载”文件夹找到 <code>.dmg</code>。</li>
+                  <li>Safari 通常不会安装应用；后续请按照下面的 macOS 步骤操作。</li>
+                </ol>
+              </details>
+            </div>
+          </div>
+        </article>
+
+        <article class="guide-step reveal">
+          <span class="guide-number">04</span>
+          <div class="guide-step-body">
+            <p class="guide-kicker">文件已经下载好</p>
+            <h3>安装并第一次打开</h3>
+            <div class="guide-grid two-columns">
+              <div class="guide-card install-card">
+                <span class="guide-os">Windows</span>
+                <ol>
+                  <li>打开资源管理器 →“下载”，找到对应的 <code>.exe</code>。</li>
+                  <li>双击安装包。如果 Windows 询问“是否允许此应用更改你的设备”，核对名称后点“是”。</li>
+                  <li>若出现“Windows 已保护你的电脑”，点击“更多信息”。</li>
+                  <li>再次核对应用名为 Yuniverse，然后点击“仍要运行”。</li>
+                  <li>按安装向导完成安装，再从桌面或开始菜单启动 Yuniverse。</li>
+                </ol>
+              </div>
+              <div class="guide-card install-card">
+                <span class="guide-os">macOS</span>
+                <ol>
+                  <li>在 Finder →“下载”中双击 <code>.dmg</code>。</li>
+                  <li>将 Yuniverse 拖入“应用程序”文件夹，再从“应用程序”打开。</li>
+                  <li>若提示无法验证开发者，先关闭提示，再进入“系统设置 → 隐私与安全性”。</li>
+                  <li>在“安全性”区域找到 Yuniverse，点击“仍要打开”，输入登录密码并确认。</li>
+                  <li>若桌宠无法跟随鼠标或感知输入，请按系统提示为 Yuniverse 开启“辅助功能”或“输入监控”权限。</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="guide-step reveal">
+          <span class="guide-number">05</span>
+          <div class="guide-step-body">
+            <p class="guide-kicker">可选，但更安心</p>
+            <h3>核对 SHA-256</h3>
+            <p class="guide-copy">下载区会随安装包显示对应的 SHA-256。它就像文件的“指纹”：本机计算出的结果必须与网页完全一致。</p>
+            <div class="hash-commands">
+              <div><strong>Windows PowerShell</strong><code>Get-FileHash "$HOME\Downloads\文件名.exe" -Algorithm SHA256</code></div>
+              <div><strong>macOS 终端</strong><code>shasum -a 256 ~/Downloads/文件名.dmg</code></div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="signature-status reveal">
+        <div>
+          <p class="guide-kicker">为什么现在仍会弹警告？</p>
+          <h3>安全扫描与“开发者签名”不是一回事</h3>
+          <p>1.0.0 的 Windows x86_64 与 ARM64 安装包已经使用本机 Microsoft Defender 扫描，未发现威胁；但它们目前没有商业代码签名，因此 Windows 和浏览器仍可能显示“未知发布者”或“不常下载”。macOS 包目前使用 ad-hoc 签名，尚未用 Apple Developer ID 签名和公证。</p>
+        </div>
+        <div class="signature-paths">
+          <p><strong>Windows 要明显减少提示：</strong>使用经过身份验证的代码签名证书持续签署每个版本，积累 SmartScreen 声誉；或发布到 Microsoft Store。</p>
+          <p><strong>macOS 要消除未验证开发者提示：</strong>需要 Apple Developer Program、Developer ID、Hardened Runtime，并提交 Apple 公证后将公证票据附加到安装包。</p>
+          <p>这些步骤需要开发者实名账户和签名凭据，不能靠修改程序或让用户关闭安全功能来替代。</p>
+        </div>
+      </div>
+
+      <div class="guide-sources reveal" aria-label="官方安装与安全说明">
+        <span>官方参考</span>
+        <a href="https://support.microsoft.com/en-us/windows/experience/compatibility/32-bit-and-64-bit-windows-frequently-asked-questions" target="_blank" rel="noreferrer">查看 Windows 系统类型</a>
+        <a href="https://support.microsoft.com/en-us/edge/how-can-smartscreen-help-protect-me-in-microsoft-edge" target="_blank" rel="noreferrer">Edge SmartScreen</a>
+        <a href="https://support.google.com/chrome/answer/6261569" target="_blank" rel="noreferrer">Chrome 下载警告</a>
+        <a href="https://support.mozilla.org/en-US/kb/where-find-and-manage-downloaded-files-firefox" target="_blank" rel="noreferrer">Firefox 下载管理</a>
+        <a href="https://support.apple.com/en-us/116943" target="_blank" rel="noreferrer">识别 Apple Silicon</a>
+        <a href="https://support.apple.com/en-us/102445" target="_blank" rel="noreferrer">安全打开 Mac 应用</a>
       </div>
     </section>
 
