@@ -55,6 +55,10 @@ test('one global member selector controls both motion previews', () => {
   ]) {
     assert.equal(html.includes(`id="${id}"`), true);
   }
+  assert.equal(html.includes('JUST 大猫 · 跟随鼠标转头'), false);
+  assert.equal(html.includes('JUST 大猫 · 走近你的光标'), false);
+  assert.equal(html.includes('id="follow-preview-title">跟随鼠标转头</h3>'), true);
+  assert.equal(html.includes('id="walk-preview-title">走近你的光标</h3>'), true);
 });
 
 test('all packaged preview media exists and is non-empty', () => {

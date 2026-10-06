@@ -188,14 +188,14 @@ function updateMotionPreview() {
   followPreviewSource.srcset = `./assets/previews/${selectedPreviewPet}-follow.webp`;
   followPreviewImage.src = `./assets/previews/${selectedPreviewPet}-follow.gif`;
   followPreviewImage.alt = `${pet.name}跟随光标向十六个方向转头的循环预览`;
-  followPreviewTitle.textContent = `${pet.name} · 跟随鼠标转头`;
+  followPreviewTitle.textContent = "跟随鼠标转头";
   followPreviewDescription.textContent = pet.follow;
 
   walkPreviewPoster.srcset = `./assets/previews/${selectedPreviewPet}-walk.png`;
   walkPreviewSource.srcset = `./assets/previews/${selectedPreviewPet}-walk.webp`;
   walkPreviewImage.src = `./assets/previews/${selectedPreviewPet}-walk.gif`;
   walkPreviewImage.alt = `${pet.name}走向目标位置的循环预览`;
-  walkPreviewTitle.textContent = `${pet.name} · 走近你的光标`;
+  walkPreviewTitle.textContent = "走近你的光标";
   walkPreviewDescription.textContent = pet.walk;
 }
 
