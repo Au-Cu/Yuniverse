@@ -5,11 +5,12 @@
 ## 下载
 
 - [Yuniverse 官网（Cloudflare）](https://yuniverse411.pages.dev)
+- [桌宠动作预览](https://yuniverse411.pages.dev/#preview)
 - [小白安装指南](https://yuniverse411.pages.dev/#install)
 - [Yuniverse 备用镜像（GitHub Pages）](https://au-cu.github.io/Yuniverse/)
 - [GitHub Release v1.0.0](https://github.com/Au-Cu/Yuniverse/releases/tag/v1.0.0)
 
-官网会分架构提供 Windows 与 macOS 成品；体积较大的文件会依次下载、校验分片，再由浏览器合成为完整安装包。GitHub Release 同时保留各平台原始安装包、Windows 便携版和 SHA-256 校验文件。
+官网会分架构提供 Windows 与 macOS 成品；体积较大的文件会依次下载、自动校验分片，再由浏览器合成为完整安装包。GitHub Release 同时保留各平台原始安装包和 Windows 便携版。
 
 ## 使用
 
@@ -33,7 +34,7 @@ macOS Intel 设备使用 `Yuniverse-macOS-x64-1.0.0.dmg`，Apple Silicon（M1 �
 
 为避免 Windows/NSIS 在部分中文代码页环境中把路径转成乱码，安装文件、真正的主程序、桌面快捷方式与界面统一使用纯英文名 `Yuniverse`。
 
-当前 1.0.0 提供 Windows ARM64、Windows x64、macOS Intel x64 和 macOS Apple Silicon arm64。程序没有商业代码签名证书，因此 Windows 可能显示“未知发布者”或 SmartScreen 提示；请只运行发布页内、且 SHA-256 与 `SHA256SUMS.txt` 一致的文件。
+当前 1.0.0 提供 Windows ARM64、Windows x64、macOS Intel x64 和 macOS Apple Silicon arm64。程序没有商业代码签名证书，因此 Windows 可能显示“未知发布者”或 SmartScreen 提示；请只从官网或本仓库的 Release 页面下载安装包。
 
 设置保存在 `%APPDATA%\Yuniverse\settings.json`，不会上传。第一次运行会自动从 `%APPDATA%\JUSTPet\settings.json`、更早的 `%APPDATA%\just-cats-desktop-pet\settings.json` 或早期中文目录迁移设置。数据目录继续使用纯英文名，避免中文代码页导致路径乱码。
 
@@ -51,8 +52,14 @@ npm run build
 
 项目固定使用 electron-builder 26.15.3。其原始 NSIS 模板遗漏了单一 ARM64 `useZip` 分支，`prebuild`/`predist` 会先运行一个严格匹配的局部修补；若上游模板发生变化，脚本会直接失败而不会生成空壳程序。
 
+## 网站文案约定
+
+公开页面只呈现角色、动作预览、下载入口与用户安装帮助。不要把证书购买、开发者账号、应用商店上架、签名流程、发布计划等面向交付的内部说明放进网站；也不要要求普通用户手动核对文件哈希。下载完整性由网页自动校验。
+
 ## 素材规范
 
 三张运行时精灵表均为 v2 格式：1536×2288、8 列×11 行、单格 192×208。两只猫继续使用原图中的待机、行走、招手、睡觉和 16 向转头，并以独立透明精灵条替换顶部连续七个方向帧；坐姿是独立的 192×208 透明帧。
 
 珉鸟的高清透明母版、闭眼休息、单翅招手和禽类迈步关键姿势保存在 `assets/source`，运行时图集由 `npm run build:minbird-assets` 在 Windows 上确定性生成。行走循环与方向帧只复用这些母版做缩放、镜像、轻微旋转和重心位移，不逐帧重生脸部。
+
+网页动作预览的 6 组动图、静态封面、成员按钮图、坐下组合图和休眠组合图统一保存在 `website/yuniverse/dist/assets/previews`。运行 `py tools/build-site-preview-media.py` 可从当前运行时素材重新生成整套预览文件。

@@ -20,6 +20,7 @@
     </a>
     <nav aria-label="主导航">
       <a href="#members">成员</a>
+      <a href="#preview">动作预览</a>
       <a href="#install">安装指南</a>
       <a class="nav-download" href="#download">下载</a>
     </nav>
@@ -95,27 +96,66 @@
       </div>
     </section>
 
-    <section class="features section-shell" id="features">
+    <section class="preview section-shell" id="preview">
       <div class="section-heading reveal">
-        <p class="eyebrow"><span></span> Made for your desktop</p>
-        <h2>它不是贴图，<br>它在回应你</h2>
+        <p class="eyebrow"><span></span> See them in motion</p>
+        <h2>先看看它们<br>怎么陪你</h2>
+        <p>这里使用程序内的同一套动作素材。转头和行走用短循环展示，坐下与休眠保留为静态画面。</p>
       </div>
-      <div class="feature-list">
-        <article class="feature reveal">
-          <span class="feature-icon">↗</span>
-          <div><h3>看向光标</h3><p>光标移动时自然转头，抬头与低头都有连续方向变化。</p></div>
+
+      <div class="preview-toolbar reveal">
+        <div class="preview-switcher global-preview-switcher" role="group" aria-label="选择动作预览成员">
+          <button class="selected" type="button" data-preview-pet="big" aria-pressed="true"><img src="./assets/previews/big-selector.png" width="192" height="208" alt="" aria-hidden="true"><span>JUST 大猫</span></button>
+          <button type="button" data-preview-pet="alien" aria-pressed="false"><img src="./assets/previews/alien-selector.png" width="192" height="208" alt="" aria-hidden="true"><span>外星猫</span></button>
+          <button type="button" data-preview-pet="minbird" aria-pressed="false"><img src="./assets/previews/minbird-selector.png" width="192" height="208" alt="" aria-hidden="true"><span>珉鸟</span></button>
+        </div>
+      </div>
+
+      <div class="preview-grid">
+        <article class="preview-card motion-card look-card reveal">
+          <div class="preview-meta"><span>转头预览</span><i>01</i></div>
+          <div class="preview-stage">
+            <picture>
+              <source id="follow-preview-poster" srcset="./assets/previews/big-follow.png" media="(prefers-reduced-motion: reduce)">
+              <source id="follow-preview-source" srcset="./assets/previews/big-follow.webp" type="image/webp">
+              <img id="follow-preview-image" src="./assets/previews/big-follow.gif" width="640" height="360" alt="JUST 大猫跟随光标向十六个方向转头">
+            </picture>
+          </div>
+          <div class="preview-copy" aria-live="polite">
+            <h3 id="follow-preview-title">JUST 大猫 · 跟随鼠标转头</h3>
+            <p id="follow-preview-description">鼠标移动时，JUST 大猫会转头看向光标。</p>
+          </div>
         </article>
-        <article class="feature reveal">
-          <span class="feature-icon">→</span>
-          <div><h3>走来陪你</h3><p>光标停下或开始打字后，它会走到光标所在的竖直线上，并避开屏幕边缘。</p></div>
+
+        <article class="preview-card motion-card walk-card reveal">
+          <div class="preview-meta"><span>走动预览</span><i>02</i></div>
+          <div class="preview-stage">
+            <picture>
+              <source id="walk-preview-poster" srcset="./assets/previews/big-walk.png" media="(prefers-reduced-motion: reduce)">
+              <source id="walk-preview-source" srcset="./assets/previews/big-walk.webp" type="image/webp">
+              <img id="walk-preview-image" src="./assets/previews/big-walk.gif" width="640" height="360" alt="JUST 大猫走向目标位置">
+            </picture>
+          </div>
+          <div class="preview-copy" aria-live="polite">
+            <h3 id="walk-preview-title">JUST 大猫 · 走近你的光标</h3>
+            <p id="walk-preview-description">鼠标停下一小会儿或开始打字后，JUST 大猫会走到光标所在的竖直线上。</p>
+          </div>
         </article>
-        <article class="feature reveal">
-          <span class="feature-icon">⌁</span>
-          <div><h3>懂得休息</h3><p>工作时坐下陪伴；键鼠长时间没有输入，才会进入睡眠并保持安静。</p></div>
+
+        <article class="preview-card still-card sit-card reveal">
+          <div class="preview-meta"><span>静态姿势</span><i>03</i></div>
+          <div class="still-stage sit-stage">
+            <img src="./assets/previews/sitting.png" width="640" height="360" alt="JUST 大猫与外星猫坐下陪伴的姿势">
+          </div>
+          <div class="preview-copy"><h3>坐下陪伴</h3><p>走到位置后如果你还在打字，两只猫会安静坐下。</p></div>
         </article>
-        <article class="feature reveal">
-          <span class="feature-icon">Aa</span>
-          <div><h3>大小刚刚好</h3><p>五档比例可选，从更轻巧到更醒目，适配不同尺寸与缩放的屏幕。</p></div>
+
+        <article class="preview-card still-card sleep-card reveal">
+          <div class="preview-meta"><span>静态姿势</span><i>04</i></div>
+          <div class="still-stage sleep-stage">
+            <img src="./assets/previews/sleeping.png" width="640" height="360" alt="三位桌宠闭眼休眠的姿势">
+          </div>
+          <div class="preview-copy"><h3>久静后休眠</h3><p>键鼠一段时间没有输入，才会闭眼休息，并保持睡眠状态。</p></div>
         </article>
       </div>
     </section>
@@ -150,12 +190,7 @@
             <div class="progress-track"><span id="progress-bar"></span></div>
           </div>
           <p class="download-status" id="download-status" role="status" aria-live="polite">点击后请保持本页打开，完成时浏览器会弹出保存。</p>
-          <div class="hash-box">
-            <span>SHA-256</span>
-            <code id="release-hash">7689effe2ff151b03da77b4f938aef1968c0f32b203f681ab49eb549e5f3e853</code>
-            <button id="copy-hash" type="button">复制</button>
-          </div>
-          <p class="safety-note">若系统显示来源或开发者提示，请先核对上方哈希值，再按照下方的 <a href="#install">小白安装指南</a> 操作。</p>
+          <p class="safety-note">网站会自动校验每个下载分片，全部通过后才会生成安装包。若系统显示来源或开发者提示，请按照下方的 <a href="#install">小白安装指南</a> 操作。</p>
           <p class="safety-note">分片下载遇到问题时，可前往 <a href="https://github.com/Au-Cu/Yuniverse/releases/tag/v1.0.0" rel="noreferrer">GitHub Release</a> 获取安装版或便携版。</p>
         </div>
       </div>
@@ -170,7 +205,7 @@
 
       <aside class="guide-safety reveal">
         <strong>先判断警告属于哪一种</strong>
-        <p>只有提示“此文件不常下载”“无法验证发布者”或“未知发布者”，并且文件来自本官网、文件名与 SHA-256 均一致时，才继续保留或运行。如果明确提示“检测到病毒”“恶意软件”或“会损坏电脑”，请立即停止，不要绕过。</p>
+        <p>只有提示“此文件不常下载”“无法验证发布者”或“未知发布者”，并且文件来自本官网、网页已经显示下载完成时，才继续保留或运行。如果明确提示“检测到病毒”“恶意软件”或“会损坏电脑”，请立即停止，不要绕过。</p>
       </aside>
 
       <div class="guide-steps">
@@ -246,7 +281,7 @@
                   <li>打开右上角“下载”按钮，或按 <kbd>Ctrl</kbd> + <kbd>J</kbd>。</li>
                   <li>在 Yuniverse 下载项旁点击 <strong>…</strong>，选择“保留”。</li>
                   <li>若再次询问，点“显示详细信息”“查看更多”或“更多”，再选“仍然保留”。部分 Edge 版本会把它放在“删除”按钮旁的下拉菜单里。</li>
-                  <li>如果出现“报告此文件安全”，可在核对来源和哈希后向 Microsoft 反馈误报。</li>
+                  <li>如果出现“报告此文件安全”，可在确认文件来自本官网后向 Microsoft 反馈误报。</li>
                 </ol>
               </details>
               <details>
@@ -254,7 +289,7 @@
                 <ol>
                   <li>打开右上角“下载”按钮，或按 <kbd>Ctrl</kbd> + <kbd>J</kbd>。</li>
                   <li>如果 Chrome 提供“检查恶意软件”，优先先执行检查。</li>
-                  <li>确认来源和哈希无误后，根据版本选择“保留”“下载可疑文件”或“仍要下载”。不要为了下载而关闭安全浏览。</li>
+                  <li>确认文件来自本官网、网页已经显示下载完成后，根据版本选择“保留”“下载可疑文件”或“仍要下载”。不要为了下载而关闭安全浏览。</li>
                 </ol>
               </details>
               <details>
@@ -306,31 +341,6 @@
           </div>
         </article>
 
-        <article class="guide-step reveal">
-          <span class="guide-number">05</span>
-          <div class="guide-step-body">
-            <p class="guide-kicker">可选，但更安心</p>
-            <h3>核对 SHA-256</h3>
-            <p class="guide-copy">下载区会随安装包显示对应的 SHA-256。它就像文件的“指纹”：本机计算出的结果必须与网页完全一致。</p>
-            <div class="hash-commands">
-              <div><strong>Windows PowerShell</strong><code>Get-FileHash "$HOME\Downloads\文件名.exe" -Algorithm SHA256</code></div>
-              <div><strong>macOS 终端</strong><code>shasum -a 256 ~/Downloads/文件名.dmg</code></div>
-            </div>
-          </div>
-        </article>
-      </div>
-
-      <div class="signature-status reveal">
-        <div>
-          <p class="guide-kicker">为什么现在仍会弹警告？</p>
-          <h3>安全扫描与“开发者签名”不是一回事</h3>
-          <p>1.0.0 的 Windows x86_64 与 ARM64 安装包已经使用本机 Microsoft Defender 扫描，未发现威胁；但它们目前没有商业代码签名，因此 Windows 和浏览器仍可能显示“未知发布者”或“不常下载”。macOS 包目前使用 ad-hoc 签名，尚未用 Apple Developer ID 签名和公证。</p>
-        </div>
-        <div class="signature-paths">
-          <p><strong>Windows 要明显减少提示：</strong>使用经过身份验证的代码签名证书持续签署每个版本，积累 SmartScreen 声誉；或发布到 Microsoft Store。</p>
-          <p><strong>macOS 要消除未验证开发者提示：</strong>需要 Apple Developer Program、Developer ID、Hardened Runtime，并提交 Apple 公证后将公证票据附加到安装包。</p>
-          <p>这些步骤需要开发者实名账户和签名凭据，不能靠修改程序或让用户关闭安全功能来替代。</p>
-        </div>
       </div>
 
       <div class="guide-sources reveal" aria-label="官方安装与安全说明">
@@ -347,7 +357,7 @@
     <section class="notes section-shell">
       <div class="note-block reveal"><span>01</span><h3>为什么叫 Yuniverse？</h3><p>“Yu” 对应柳智敏韩文名字中的音节，再与 Universe 相连——不同的衍生形象，在同一个小宇宙相遇。</p></div>
       <div class="note-block reveal"><span>02</span><h3>它会上传数据吗？</h3><p>不会。桌宠在本机离线运行；键鼠信息只用于判断动作状态，不会上传到网站。</p></div>
-      <div class="note-block reveal"><span>03</span><h3>支持哪些电脑？</h3><p>当前提供 Windows x86_64、Windows ARM64、macOS ARM64 与 macOS x86_64 四种 64 位版本。</p></div>
+      <div class="note-block note-block-alert reveal"><span>03</span><p class="note-kicker">为什么仍会弹警告？</p><h3>安全扫描与开发者签名不是一回事</h3><p>Windows 安装包已用 Microsoft Defender 扫描，未发现威胁；但目前没有商业签名，所以系统或浏览器仍可能提示“未知发布者”或“不常下载”。macOS 也可能提示无法验证开发者。</p></div>
     </section>
   </main>
 

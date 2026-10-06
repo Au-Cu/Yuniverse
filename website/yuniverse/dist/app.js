@@ -91,15 +91,43 @@ const progressLabel = document.querySelector("#progress-label");
 const progressPercent = document.querySelector("#progress-percent");
 const progressBar = document.querySelector("#progress-bar");
 const downloadStatus = document.querySelector("#download-status");
-const releaseHash = document.querySelector("#release-hash");
-const copyHash = document.querySelector("#copy-hash");
 const compatibilitySystem = document.querySelector("#compatibility-system");
 const compatibilityArch = document.querySelector("#compatibility-arch");
 const compatibilitySize = document.querySelector("#compatibility-size");
 const platformButtons = [...document.querySelectorAll("[data-release]")];
+const previewPetButtons = [...document.querySelectorAll("[data-preview-pet]")];
+const followPreviewPoster = document.querySelector("#follow-preview-poster");
+const followPreviewSource = document.querySelector("#follow-preview-source");
+const followPreviewImage = document.querySelector("#follow-preview-image");
+const followPreviewTitle = document.querySelector("#follow-preview-title");
+const followPreviewDescription = document.querySelector("#follow-preview-description");
+const walkPreviewPoster = document.querySelector("#walk-preview-poster");
+const walkPreviewSource = document.querySelector("#walk-preview-source");
+const walkPreviewImage = document.querySelector("#walk-preview-image");
+const walkPreviewTitle = document.querySelector("#walk-preview-title");
+const walkPreviewDescription = document.querySelector("#walk-preview-description");
 
 let selectedReleaseKey = "windowsX64";
 let downloadActive = false;
+let selectedPreviewPet = "big";
+
+const PREVIEW_CONTENT = {
+  big: {
+    name: "JUST 大猫",
+    follow: "鼠标移动时，JUST 大猫会转头看向光标。",
+    walk: "鼠标停下一小会儿或开始打字后，JUST 大猫会走到光标所在的竖直线上。"
+  },
+  alien: {
+    name: "外星猫",
+    follow: "鼠标移动时，外星猫会转头看向光标。",
+    walk: "鼠标停下一小会儿或开始打字后，外星猫会走到光标所在的竖直线上。"
+  },
+  minbird: {
+    name: "珉鸟",
+    follow: "鼠标移动时，珉鸟会转头看向光标。",
+    walk: "鼠标停下一小会儿或开始打字后，珉鸟会双脚交替走到光标所在的竖直线上。"
+  }
+};
 
 const toHex = (buffer) => Array.from(new Uint8Array(buffer), (byte) => byte.toString(16).padStart(2, "0")).join("");
 
@@ -116,7 +144,6 @@ function updateReleaseUI() {
   });
   downloadButtonTitle.textContent = release.buttonText;
   releaseFileName.textContent = release.fileName;
-  releaseHash.textContent = release.sha256;
   compatibilitySystem.textContent = release.system;
   compatibilityArch.textContent = release.arch;
   compatibilitySize.textContent = release.sizeLabel;
@@ -124,6 +151,30 @@ function updateReleaseUI() {
   downloadProgress.hidden = true;
   progressBar.style.width = "0";
   progressPercent.textContent = "0%";
+}
+
+function updateMotionPreview() {
+  const pet = PREVIEW_CONTENT[selectedPreviewPet];
+
+  previewPetButtons.forEach((button) => {
+    const active = button.dataset.previewPet === selectedPreviewPet;
+    button.classList.toggle("selected", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+
+  followPreviewPoster.srcset = `./assets/previews/${selectedPreviewPet}-follow.png`;
+  followPreviewSource.srcset = `./assets/previews/${selectedPreviewPet}-follow.webp`;
+  followPreviewImage.src = `./assets/previews/${selectedPreviewPet}-follow.gif`;
+  followPreviewImage.alt = `${pet.name}跟随光标向十六个方向转头的循环预览`;
+  followPreviewTitle.textContent = `${pet.name} · 跟随鼠标转头`;
+  followPreviewDescription.textContent = pet.follow;
+
+  walkPreviewPoster.srcset = `./assets/previews/${selectedPreviewPet}-walk.png`;
+  walkPreviewSource.srcset = `./assets/previews/${selectedPreviewPet}-walk.webp`;
+  walkPreviewImage.src = `./assets/previews/${selectedPreviewPet}-walk.gif`;
+  walkPreviewImage.alt = `${pet.name}走向目标位置的循环预览`;
+  walkPreviewTitle.textContent = `${pet.name} · 走近你的光标`;
+  walkPreviewDescription.textContent = pet.walk;
 }
 
 function setProgress(release, received, label) {
@@ -172,7 +223,7 @@ async function downloadRelease() {
   downloadButton.disabled = true;
   platformButtons.forEach((button) => { button.disabled = true; });
   downloadProgress.hidden = false;
-  downloadStatus.textContent = `正在获取 ${release.label}。所有分片通过 SHA-256 校验后才会生成安装包。`;
+  downloadStatus.textContent = `正在获取 ${release.label}。所有分片通过完整性校验后才会生成安装包。`;
   setProgress(release, 0, "正在连接下载服务器…");
 
   const verifiedParts = [];
@@ -216,24 +267,18 @@ platformButtons.forEach((button) => {
   });
 });
 
-downloadButton.addEventListener("click", downloadRelease);
-
-copyHash.addEventListener("click", async () => {
-  try {
-    await navigator.clipboard.writeText(selectedRelease().sha256);
-    copyHash.textContent = "已复制";
-  } catch {
-    const range = document.createRange();
-    range.selectNodeContents(releaseHash);
-    const selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
-    copyHash.textContent = "请复制";
-  }
-  setTimeout(() => { copyHash.textContent = "复制"; }, 1800);
+previewPetButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    if (!PREVIEW_CONTENT[button.dataset.previewPet]) return;
+    selectedPreviewPet = button.dataset.previewPet;
+    updateMotionPreview();
+  });
 });
 
+downloadButton.addEventListener("click", downloadRelease);
+
 updateReleaseUI();
+updateMotionPreview();
 
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
