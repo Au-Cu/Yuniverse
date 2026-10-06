@@ -21,7 +21,7 @@ jobs:
       - run: npm run verify:assets
       - run: npm run make:icon
       - name: Build Windows x64 packages
-        run: npx electron-builder --win portable nsis --x64 --config.directories.output=release-x64
+        run: npx electron-builder --win portable nsis --x64 --config.directories.output=release-x64 --publish never
       - name: Verify architecture and name artifacts
         shell: pwsh
         run: |
@@ -65,7 +65,7 @@ jobs:
       - run: npm run verify:assets
       - run: npm run make:icon
       - name: Build macOS package
-        run: npx electron-builder --mac dmg zip --${{ matrix.arch }} --config.directories.output=release-mac-${{ matrix.arch }}
+        run: npx electron-builder --mac dmg zip --${{ matrix.arch }} --config.directories.output=release-mac-${{ matrix.arch }} --publish never
       - name: Verify signature, architecture, and smoke test
         shell: bash
         run: |
