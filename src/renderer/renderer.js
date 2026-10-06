@@ -143,7 +143,7 @@
   function renderLookIndex(index) {
     if (!activeAtlas || !Number.isInteger(index)) return;
     clearCanvas();
-    const correctedColumn = correctedLookColumn(index);
+    const correctedColumn = correctedLookColumn(index, settings.pet !== 'minbird');
     if (correctedColumn !== null && activeLookUp) {
       context.drawImage(
         activeLookUp,

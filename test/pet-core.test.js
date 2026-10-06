@@ -56,6 +56,13 @@ test('the seven upper directions address one continuous corrected strip', () => 
   assert.equal(correctedLookColumn(null), null);
 });
 
+test('legacy cat upper turns reverse screen-left and screen-right without changing up', () => {
+  assert.deepEqual(
+    [0, 1, 2, 3, 13, 14, 15].map((index) => correctedLookColumn(index, true)),
+    [0, 6, 5, 4, 3, 2, 1]
+  );
+});
+
 test('horizontal walking stops inside the alignment tolerance', () => {
   assert.equal(horizontalDirection(100, 89, 10), -1);
   assert.equal(horizontalDirection(100, 90, 10), 0);

@@ -3,7 +3,7 @@
   "short_name": "Yuniverse",
   "description": "柳智敏衍生桌宠小宇宙",
   "lang": "zh-CN",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#f8f5ed",
   "theme_color": "#f8f5ed"

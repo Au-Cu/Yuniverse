@@ -2,6 +2,13 @@
 
 `JUST大猫`、`JUST外星猫` 与 `珉鸟` 组成的柳智敏衍生桌宠小宇宙。`Yu` 对应柳智敏韩文名字中的音节，并与 `universe` 组合成 `Yuniverse`；名字不限定成员必须是猫或鸟，今后加入其他衍生形象也能自然容纳。运行打包后的程序不需要 Codex、ChatGPT、Node.js 或其他开发环境，也不会连接网络。
 
+## 下载
+
+- [Yuniverse 官网镜像](https://yuniverse.aucu050410.chatgpt.site)
+- [GitHub Release v1.0.0](https://github.com/Au-Cu/Yuniverse/releases/tag/v1.0.0)
+
+官网会依次下载并校验 8 个分片，再在浏览器中合成为标准安装程序；GitHub Release 同时提供安装版、便携版和 SHA-256 校验文件。
+
 ## 使用
 
 - 拖动桌宠：按住左键拖到桌面任意位置。

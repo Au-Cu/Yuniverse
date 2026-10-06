@@ -1,0 +1,49 @@
+name: Deploy website
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "website/yuniverse/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore release download parts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          release_dir="$RUNNER_TEMP/yuniverse-release"
+          downloads="website/yuniverse/dist/downloads"
+          mkdir -p "$release_dir" "$downloads"
+          gh release download v1.0.0 --pattern "Yuniverse-Setup-1.0.0.exe" --dir "$release_dir"
+          echo "ce89ef6896780feb7926b0534ba744047009d85339643e318af49ab816a5dc65  $release_dir/Yuniverse-Setup-1.0.0.exe" | sha256sum --check --strict
+          split --bytes=20971520 --numeric-suffixes=1 --suffix-length=2 --additional-suffix=.bin \
+            "$release_dir/Yuniverse-Setup-1.0.0.exe" \
+            "$downloads/Yuniverse-Setup-1.0.0.part"
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: website/yuniverse/dist
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

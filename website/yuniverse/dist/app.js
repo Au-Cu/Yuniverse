@@ -1,16 +1,16 @@
 const RELEASE = {
   fileName: "Yuniverse-Setup-1.0.0.exe",
-  size: 156627302,
-  sha256: "e5c5301a3fa647916fa5758f790446f702090f97bd531b1023861f77f30a47d9",
+  size: 156627688,
+  sha256: "ce89ef6896780feb7926b0534ba744047009d85339643e318af49ab816a5dc65",
   parts: [
-    ["Yuniverse-Setup-1.0.0.part01.bin", 20971520, "6aa26b4e3981304b2b074fae25f781679825960a8c1dad0e9068ceb99afc0306"],
-    ["Yuniverse-Setup-1.0.0.part02.bin", 20971520, "75bda063749acb1eea9edbc2205cdc295e754c407532fb039955d49a0172ee01"],
-    ["Yuniverse-Setup-1.0.0.part03.bin", 20971520, "7fdf360a0a212dfb2288603d5974b4e4dbfa75a4b700b5ef5a07bbdc43341bb0"],
-    ["Yuniverse-Setup-1.0.0.part04.bin", 20971520, "65ba95008fc8a5519751b02560e59042288239c128cd2b3e5ed109d476a2700c"],
-    ["Yuniverse-Setup-1.0.0.part05.bin", 20971520, "85e84a1d1a20d561284087cf73d9af4e5b3b5e4f73cb7f1020ab068b38233a69"],
-    ["Yuniverse-Setup-1.0.0.part06.bin", 20971520, "a7f6477548cca006412be341f7ebece0fbfc86e3048d96a633f651bdc91ecfa2"],
-    ["Yuniverse-Setup-1.0.0.part07.bin", 20971520, "fb22dfb90ac06f4360a3d94c0655b83b549fe7a7cc01fa8a3ae00f35cfef9865"],
-    ["Yuniverse-Setup-1.0.0.part08.bin", 9826662, "8fc09411528e1176a3e7302200462782bcedbbdbd6658e9a2e6e759529eb0d64"]
+    ["Yuniverse-Setup-1.0.0.part01.bin", 20971520, "d9089bf49eaa93652e9e8a968ea7529626a86cddbc58faf25a5dbcbad268a6fe"],
+    ["Yuniverse-Setup-1.0.0.part02.bin", 20971520, "8aae754e6d0da3ed004f42d2bdf365fec6640ea27498ec9458300b6ba95c37bc"],
+    ["Yuniverse-Setup-1.0.0.part03.bin", 20971520, "6fce435feae65c7bdcb4b895328da493b9ace53f367a80ed92b94f8df24dc212"],
+    ["Yuniverse-Setup-1.0.0.part04.bin", 20971520, "c44bcebcfe12702a2fd0fbd11fc863af877994db90d4e74d0e1d2da00ed91452"],
+    ["Yuniverse-Setup-1.0.0.part05.bin", 20971520, "9bffae0db03c4336745989ecb9b209f3d94b1b0908b936a7803e29ac62236ef4"],
+    ["Yuniverse-Setup-1.0.0.part06.bin", 20971520, "b49823235a54f7b1f478d19c75c7e149ec493db5c9b9e6b22fc31bd00f1386eb"],
+    ["Yuniverse-Setup-1.0.0.part07.bin", 20971520, "2e085abad92bb52bc7fa65eddb816a390a5f01903b2b2b06b4e5468a869c3051"],
+    ["Yuniverse-Setup-1.0.0.part08.bin", 9827048, "228300d59c79b9ba090f5e280295bfcbfceb9e18d008a69ee537fdb0f964e413"]
   ]
 };
 
@@ -33,7 +33,7 @@ function setProgress(received, label) {
 
 async function fetchVerifiedPart(part, partIndex, completedBytes) {
   const [name, expectedSize, expectedHash] = part;
-  const response = await fetch(`/downloads/${name}`, { cache: "no-store" });
+  const response = await fetch(`./downloads/${name}`, { cache: "no-store" });
   if (!response.ok || !response.body) throw new Error(`分片 ${partIndex + 1} 下载失败（HTTP ${response.status}）`);
 
   const reader = response.body.getReader();

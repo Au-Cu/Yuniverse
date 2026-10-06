@@ -21,11 +21,18 @@
       : { row: 10, column: index - 8 };
   }
 
-  function correctedLookColumn(index) {
+  function correctedLookColumn(index, reverseHorizontal = false) {
     if (!Number.isInteger(index)) return null;
-    if (index >= 0 && index <= 3) return index;
-    if (index >= 13 && index <= 15) return index - 9;
-    return null;
+    let column = null;
+    if (index >= 0 && index <= 3) column = index;
+    if (index >= 13 && index <= 15) column = index - 9;
+    if (column === null || reverseHorizontal !== true || column === 0) return column;
+
+    // The two legacy cat atlases label their upper-turn frames from the
+    // character's point of view, which is opposite to screen-left/right.
+    // Their corrected strip keeps that source order, so mirror the semantic
+    // lookup around the centered column. Minbird already uses screen order.
+    return 7 - column;
   }
 
   function horizontalDirection(currentCenterX, cursorX, tolerance = 10) {

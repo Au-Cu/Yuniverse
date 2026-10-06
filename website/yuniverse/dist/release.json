@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "platform": "Windows ARM64",
   "file": "Yuniverse-Setup-1.0.0.exe",
-  "size": 156627302,
-  "sha256": "e5c5301a3fa647916fa5758f790446f702090f97bd531b1023861f77f30a47d9",
+  "size": 156627688,
+  "sha256": "ce89ef6896780feb7926b0534ba744047009d85339643e318af49ab816a5dc65",
   "parts": 8
 }
