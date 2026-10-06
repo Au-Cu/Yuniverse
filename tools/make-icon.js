@@ -27,14 +27,17 @@ app.whenReady().then(() => {
     app.exit(1);
     return;
   }
-  const icon = source
+  const windowsIcon = source
     .crop({ x: 0, y: 0, width: 192, height: 208 })
     .resize({ width: 256, height: 256, quality: 'best' });
-  const png = icon.toPNG();
+  const macIcon = source
+    .crop({ x: 0, y: 0, width: 192, height: 208 })
+    .resize({ width: 512, height: 512, quality: 'best' });
+  const windowsPng = windowsIcon.toPNG();
   const outputDir = path.join(__dirname, '..', 'build');
   fs.mkdirSync(outputDir, { recursive: true });
-  fs.writeFileSync(path.join(outputDir, 'icon.png'), png);
-  fs.writeFileSync(path.join(outputDir, 'icon.ico'), makeSinglePngIco(png));
-  console.log('OK build/icon.ico');
+  fs.writeFileSync(path.join(outputDir, 'icon.png'), macIcon.toPNG());
+  fs.writeFileSync(path.join(outputDir, 'icon.ico'), makeSinglePngIco(windowsPng));
+  console.log('OK build/icon.png (512px) and build/icon.ico (256px)');
   app.exit(0);
 });

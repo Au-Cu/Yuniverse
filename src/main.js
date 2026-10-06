@@ -180,11 +180,12 @@ function startupExecutablePath() {
 function setLaunchAtLogin(enabled) {
   if (!app.isPackaged) return;
   try {
-    app.setLoginItemSettings({
-      openAtLogin: enabled,
-      path: startupExecutablePath(),
-      args: []
-    });
+    const loginSettings = { openAtLogin: enabled };
+    if (process.platform === 'win32') {
+      loginSettings.path = startupExecutablePath();
+      loginSettings.args = [];
+    }
+    app.setLoginItemSettings(loginSettings);
     applySettings({ launchAtLogin: enabled });
   } catch (error) {
     console.error('Unable to update login item:', error);
@@ -473,6 +474,8 @@ app.on('window-all-closed', () => {
 });
 
 app.whenReady().then(() => {
+  // A desktop companion belongs in the menu bar rather than the Dock on macOS.
+  app.dock?.hide();
   loadSettings();
   registerIpc();
   createWindow();

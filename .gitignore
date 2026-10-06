@@ -1,5 +1,5 @@
 node_modules/
-release/
+release*/
 .cache/
 build/
 website/yuniverse/dist/downloads/*.bin

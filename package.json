@@ -44,6 +44,19 @@
         "nsis"
       ]
     },
+    "mac": {
+      "icon": "build/icon.png",
+      "category": "public.app-category.entertainment",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "artifactName": "Yuniverse-macOS-${arch}-${version}.${ext}",
+      "identity": "-",
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist",
+      "hardenedRuntime": true
+    },
     "portable": {
       "artifactName": "Yuniverse-Portable-${version}.${ext}",
       "useZip": true,

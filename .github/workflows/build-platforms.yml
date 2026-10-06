@@ -1,0 +1,131 @@
+name: Build Windows x64 and macOS
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows-x64:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run patch:builder
+      - run: npm test
+      - run: npm run verify:assets
+      - run: npm run make:icon
+      - name: Build Windows x64 packages
+        run: npx electron-builder --win portable nsis --x64 --config.directories.output=release-x64
+      - name: Verify architecture and name artifacts
+        shell: pwsh
+        run: |
+          $binary = Get-Item "release-x64/win-unpacked/Yuniverse.exe"
+          $bytes = [System.IO.File]::ReadAllBytes($binary.FullName)
+          $peOffset = [BitConverter]::ToInt32($bytes, 0x3c)
+          $machine = [BitConverter]::ToUInt16($bytes, $peOffset + 4)
+          if ($machine -ne 0x8664) { throw "Expected AMD64 PE machine 0x8664, got 0x$($machine.ToString('x4'))" }
+          Rename-Item "release-x64/Yuniverse-Setup-1.0.0.exe" "Yuniverse-Setup-1.0.0-Windows-x64.exe"
+          Rename-Item "release-x64/Yuniverse-Portable-1.0.0.exe" "Yuniverse-Portable-1.0.0-Windows-x64.exe"
+          Get-FileHash "release-x64/Yuniverse-Setup-1.0.0-Windows-x64.exe" -Algorithm SHA256
+          Get-FileHash "release-x64/Yuniverse-Portable-1.0.0-Windows-x64.exe" -Algorithm SHA256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-x64
+          path: |
+            release-x64/Yuniverse-Setup-1.0.0-Windows-x64.exe
+            release-x64/Yuniverse-Portable-1.0.0-Windows-x64.exe
+          if-no-files-found: error
+
+  macos:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: x64
+            runner: macos-15-intel
+            file_arch: x86_64
+          - arch: arm64
+            runner: macos-15
+            file_arch: arm64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run verify:assets
+      - run: npm run make:icon
+      - name: Build macOS package
+        run: npx electron-builder --mac dmg zip --${{ matrix.arch }} --config.directories.output=release-mac-${{ matrix.arch }}
+      - name: Verify signature, architecture, and smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          output_dir="release-mac-${{ matrix.arch }}"
+          binary="$(find "$output_dir" -path '*/Yuniverse.app/Contents/MacOS/Yuniverse' -type f -print -quit)"
+          test -n "$binary"
+          file "$binary" | tee "$RUNNER_TEMP/file-${{ matrix.arch }}.txt"
+          grep -q '${{ matrix.file_arch }}' "$RUNNER_TEMP/file-${{ matrix.arch }}.txt"
+          codesign --verify --deep --strict --verbose=2 "$(dirname "$(dirname "$(dirname "$binary")")")"
+          smoke_png="$RUNNER_TEMP/yuniverse-smoke-${{ matrix.arch }}.png"
+          JUST_PET_SMOKE_OUTPUT="$smoke_png" "$binary" --smoke-test
+          test -s "$smoke_png"
+          test -s "${smoke_png%.png}.json"
+          cat "${smoke_png%.png}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-${{ matrix.arch }}
+          path: |
+            release-mac-${{ matrix.arch }}/*.dmg
+            release-mac-${{ matrix.arch }}/*.zip
+          if-no-files-found: error
+
+  publish:
+    needs: [windows-x64, macos]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+          merge-multiple: true
+      - name: Build complete checksum list
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd release-assets
+          {
+            echo "ce89ef6896780feb7926b0534ba744047009d85339643e318af49ab816a5dc65  Yuniverse-Setup-1.0.0.exe"
+            echo "0590a5258a2489fba66ed00fa9f102f0c77f609814f72bb3b52c68758e36c0be  Yuniverse-Portable-1.0.0.exe"
+            sha256sum Yuniverse-Setup-1.0.0-Windows-x64.exe
+            sha256sum Yuniverse-Portable-1.0.0-Windows-x64.exe
+            sha256sum Yuniverse-macOS-x64-1.0.0.dmg
+            sha256sum Yuniverse-macOS-x64-1.0.0.zip
+            sha256sum Yuniverse-macOS-arm64-1.0.0.dmg
+            sha256sum Yuniverse-macOS-arm64-1.0.0.zip
+          } > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+      - name: Publish to the existing 1.0.0 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release upload v1.0.0 release-assets/* --repo "$GITHUB_REPOSITORY" --clobber
+          current_notes="$(gh release view v1.0.0 --repo "$GITHUB_REPOSITORY" --json body --jq .body)"
+          if ! grep -q 'Windows x64 与 macOS' <<<"$current_notes"; then
+            {
+              printf '%s\n\n' "$current_notes"
+              echo '- 新增 Windows x64 与 macOS（Intel x64、Apple Silicon arm64）安装包。'
+              echo '- macOS 包采用 ad-hoc 签名，未经过 Apple Developer ID 公证。'
+            } > release-notes.md
+            gh release edit v1.0.0 --repo "$GITHUB_REPOSITORY" --notes-file release-notes.md
+          fi
