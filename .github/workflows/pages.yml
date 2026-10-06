@@ -26,7 +26,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Restore release download parts
+      - name: Restore release download parts for all platforms
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -34,11 +34,28 @@ jobs:
           release_dir="$RUNNER_TEMP/yuniverse-release"
           downloads="website/yuniverse/dist/downloads"
           mkdir -p "$release_dir" "$downloads"
-          gh release download v1.0.0 --pattern "Yuniverse-Setup-1.0.0.exe" --dir "$release_dir"
+          gh release download v1.0.0 \
+            --pattern "Yuniverse-Setup-1.0.0.exe" \
+            --pattern "Yuniverse-Setup-1.0.0-Windows-x64.exe" \
+            --pattern "Yuniverse-macOS-arm64-1.0.0.dmg" \
+            --pattern "Yuniverse-macOS-x64-1.0.0.dmg" \
+            --dir "$release_dir"
           echo "ce89ef6896780feb7926b0534ba744047009d85339643e318af49ab816a5dc65  $release_dir/Yuniverse-Setup-1.0.0.exe" | sha256sum --check --strict
+          echo "7689effe2ff151b03da77b4f938aef1968c0f32b203f681ab49eb549e5f3e853  $release_dir/Yuniverse-Setup-1.0.0-Windows-x64.exe" | sha256sum --check --strict
+          echo "6fa764fd73ec736895f90983a4425c45460ba796294bd9fccce9ea4103545318  $release_dir/Yuniverse-macOS-arm64-1.0.0.dmg" | sha256sum --check --strict
+          echo "d49bb448f6f848024064de20e5fe4a9ee86d9a38b505c4751ac5d1e2dd42f5ce  $release_dir/Yuniverse-macOS-x64-1.0.0.dmg" | sha256sum --check --strict
           split --bytes=20971520 --numeric-suffixes=1 --suffix-length=2 --additional-suffix=.bin \
             "$release_dir/Yuniverse-Setup-1.0.0.exe" \
             "$downloads/Yuniverse-Setup-1.0.0.part"
+          split --bytes=20971520 --numeric-suffixes=1 --suffix-length=2 --additional-suffix=.bin \
+            "$release_dir/Yuniverse-Setup-1.0.0-Windows-x64.exe" \
+            "$downloads/Yuniverse-Setup-1.0.0-Windows-x64.part"
+          split --bytes=20971520 --numeric-suffixes=1 --suffix-length=2 --additional-suffix=.bin \
+            "$release_dir/Yuniverse-macOS-arm64-1.0.0.dmg" \
+            "$downloads/Yuniverse-macOS-arm64-1.0.0.part"
+          split --bytes=20971520 --numeric-suffixes=1 --suffix-length=2 --additional-suffix=.bin \
+            "$release_dir/Yuniverse-macOS-x64-1.0.0.dmg" \
+            "$downloads/Yuniverse-macOS-x64-1.0.0.part"
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

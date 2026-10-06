@@ -166,6 +166,14 @@ img { display: block; max-width: 100%; }
 .download-panel { align-self: center; padding: 22px; border: 1px solid #4b4a46; border-radius: 26px; background: #2d2d2a; }
 .version-row { display: flex; justify-content: space-between; padding: 3px 4px 17px; color: #a8a69f; font-size: 12px; }
 .version-row strong { color: #eeece5; }
+.platform-picker { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 14px; }
+.platform-option { min-width: 0; padding: 11px 12px; border: 1px solid #53524e; border-radius: 13px; color: #aaa8a1; background: #242422; cursor: pointer; text-align: left; transition: border-color .2s ease, color .2s ease, background .2s ease, transform .2s ease; }
+.platform-option:hover { transform: translateY(-1px); border-color: #86847c; color: #e4e1d9; }
+.platform-option.selected { border-color: var(--lime); color: var(--ink); background: var(--lime); }
+.platform-option:disabled { cursor: wait; opacity: .62; transform: none; }
+.platform-option strong, .platform-option small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.platform-option strong { font-size: 12px; }
+.platform-option small { margin-top: 3px; font-size: 9px; opacity: .72; }
 .download-button { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 18px 18px 18px 20px; border: 0; border-radius: 18px; color: var(--ink); background: var(--lime); cursor: pointer; text-align: left; transition: transform .2s ease, filter .2s ease; }
 .download-button:hover { transform: translateY(-2px); filter: brightness(1.03); }
 .download-button:disabled { cursor: wait; filter: saturate(.35); transform: none; }

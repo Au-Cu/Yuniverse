@@ -1,9 +1,42 @@
 {
   "name": "Yuniverse",
   "version": "1.0.0",
-  "platform": "Windows ARM64",
-  "file": "Yuniverse-Setup-1.0.0.exe",
-  "size": 156627688,
-  "sha256": "ce89ef6896780feb7926b0534ba744047009d85339643e318af49ab816a5dc65",
-  "parts": 8
+  "platforms": [
+    {
+      "id": "windows-x64",
+      "platform": "Windows",
+      "arch": "x86_64",
+      "file": "Yuniverse-Setup-1.0.0-Windows-x64.exe",
+      "size": 158294670,
+      "sha256": "7689effe2ff151b03da77b4f938aef1968c0f32b203f681ab49eb549e5f3e853",
+      "parts": 8
+    },
+    {
+      "id": "windows-arm64",
+      "platform": "Windows",
+      "arch": "ARM64",
+      "file": "Yuniverse-Setup-1.0.0.exe",
+      "size": 156627688,
+      "sha256": "ce89ef6896780feb7926b0534ba744047009d85339643e318af49ab816a5dc65",
+      "parts": 8
+    },
+    {
+      "id": "macos-arm64",
+      "platform": "macOS",
+      "arch": "ARM64",
+      "file": "Yuniverse-macOS-arm64-1.0.0.dmg",
+      "size": 133064983,
+      "sha256": "6fa764fd73ec736895f90983a4425c45460ba796294bd9fccce9ea4103545318",
+      "parts": 7
+    },
+    {
+      "id": "macos-x64",
+      "platform": "macOS",
+      "arch": "x86_64",
+      "file": "Yuniverse-macOS-x64-1.0.0.dmg",
+      "size": 138704531,
+      "sha256": "d49bb448f6f848024064de20e5fe4a9ee86d9a38b505c4751ac5d1e2dd42f5ce",
+      "parts": 7
+    }
+  ]
 }
