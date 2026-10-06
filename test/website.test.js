@@ -8,6 +8,9 @@ const path = require('node:path');
 const root = path.join(__dirname, '..');
 const dist = path.join(root, 'website', 'yuniverse', 'dist');
 const html = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
+const app = fs.readFileSync(path.join(dist, 'app.js'), 'utf8');
+const worker = fs.readFileSync(path.join(dist, '_worker.js'), 'utf8');
+const adminHtml = fs.readFileSync(path.join(dist, 'admin', 'index.html'), 'utf8');
 
 test('public site keeps internal delivery notes out of user-facing copy', () => {
   for (const forbidden of [
@@ -82,4 +85,35 @@ test('all local image and script references resolve inside the site build', () =
   for (const reference of references) {
     assert.equal(fs.existsSync(path.join(dist, reference)), true, `missing site asset: ${reference}`);
   }
+});
+
+test('download statistics record anonymous start and completion events', () => {
+  assert.equal(app.includes('recordDownloadEvent("started"'), true);
+  assert.equal(app.includes('recordDownloadEvent("completed"'), true);
+  assert.equal(app.includes('version: "1.0.0"'), true);
+  assert.equal(worker.includes('created_at_ms'), true);
+  assert.equal(worker.includes('precision: "millisecond"'), true);
+  for (const forbidden of ['user_agent', 'ip_address', 'cf-connecting-ip']) {
+    assert.equal(worker.toLowerCase().includes(forbidden), false);
+  }
+});
+
+test('private analytics dashboard and author credit are packaged', () => {
+  for (const fileName of ['index.html', 'admin.css', 'admin.js']) {
+    const file = path.join(dist, 'admin', fileName);
+    assert.ok(fs.statSync(file).size > 0, `${fileName} is empty`);
+  }
+  assert.equal(adminHtml.includes('下载统计'), true);
+  assert.equal(adminHtml.includes('作者 Au_Cu'), true);
+  assert.equal(html.includes('作者 <strong>Au_Cu</strong>'), true);
+  assert.equal(adminHtml.includes('noindex,nofollow'), true);
+});
+
+test('website and desktop metadata remain at 1.0.0 with Au_Cu credited', () => {
+  const desktopPackage = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
+  const websitePackage = JSON.parse(fs.readFileSync(path.join(root, 'website', 'yuniverse', 'package.json'), 'utf8'));
+  assert.equal(desktopPackage.version, '1.0.0');
+  assert.equal(websitePackage.version, '1.0.0');
+  assert.equal(desktopPackage.author.name, 'Au_Cu');
+  assert.equal(desktopPackage.build.copyright.includes('Au_Cu'), true);
 });

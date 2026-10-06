@@ -83,6 +83,8 @@ const RELEASES = {
   }
 };
 
+const DOWNLOAD_STATS_ENDPOINT = "https://yuniverse411.pages.dev/api/download-event";
+
 const downloadButton = document.querySelector("#download-button");
 const downloadButtonTitle = document.querySelector("#download-button-title");
 const releaseFileName = document.querySelector("#release-filename");
@@ -130,6 +132,26 @@ const PREVIEW_CONTENT = {
 };
 
 const toHex = (buffer) => Array.from(new Uint8Array(buffer), (byte) => byte.toString(16).padStart(2, "0")).join("");
+
+function createDownloadId() {
+  if (typeof crypto.randomUUID === "function") return crypto.randomUUID();
+  const bytes = crypto.getRandomValues(new Uint8Array(16));
+  return `${Date.now().toString(36)}-${toHex(bytes)}`;
+}
+
+function recordDownloadEvent(event, releaseKey, downloadId) {
+  if (["localhost", "127.0.0.1"].includes(location.hostname)) return;
+  fetch(DOWNLOAD_STATS_ENDPOINT, {
+    method: "POST",
+    mode: "cors",
+    credentials: "omit",
+    keepalive: true,
+    headers: { "Content-Type": "text/plain;charset=UTF-8" },
+    body: JSON.stringify({ downloadId, event, releaseKey, version: "1.0.0" })
+  }).catch(() => {
+    // Statistics must never interrupt or delay a download.
+  });
+}
 
 function selectedRelease() {
   return RELEASES[selectedReleaseKey];
@@ -218,13 +240,16 @@ async function downloadRelease() {
     return;
   }
 
-  const release = selectedRelease();
+  const releaseKey = selectedReleaseKey;
+  const release = RELEASES[releaseKey];
+  const downloadId = createDownloadId();
   downloadActive = true;
   downloadButton.disabled = true;
   platformButtons.forEach((button) => { button.disabled = true; });
   downloadProgress.hidden = false;
   downloadStatus.textContent = `正在获取 ${release.label}。所有分片通过完整性校验后才会生成安装包。`;
   setProgress(release, 0, "正在连接下载服务器…");
+  recordDownloadEvent("started", releaseKey, downloadId);
 
   const verifiedParts = [];
   let completedBytes = 0;
@@ -246,6 +271,7 @@ async function downloadRelease() {
     document.body.append(anchor);
     anchor.click();
     anchor.remove();
+    recordDownloadEvent("completed", releaseKey, downloadId);
     setTimeout(() => URL.revokeObjectURL(url), 120000);
     downloadStatus.textContent = `完成：${release.fileName} 已通过分片校验并交给浏览器保存。`;
   } catch (error) {

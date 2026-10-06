@@ -1,0 +1,12 @@
+{
+  "name": "yuniverse411",
+  "pages_build_output_dir": "./dist",
+  "compatibility_date": "2026-10-06",
+  "d1_databases": [
+    {
+      "binding": "DOWNLOADS_DB",
+      "database_name": "yuniverse-download-stats",
+      "database_id": "8a14b9b9-5d2c-4a5b-b3d7-5d820359cd02"
+    }
+  ]
+}

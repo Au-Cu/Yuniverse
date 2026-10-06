@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#20201f">
+  <title>Yuniverse · 下载统计</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <a class="brand" href="../"><span class="brand-mark">Y</span><span>Yuniverse</span></a>
+    <span class="author-mark">作者 Au_Cu</span>
+  </header>
+
+  <main>
+    <section class="login-panel" id="login-panel">
+      <p class="eyebrow">Private dashboard</p>
+      <h1>下载统计</h1>
+      <p>输入管理口令后查看匿名下载记录。口令只在当前浏览器标签页中暂存。</p>
+      <form id="login-form">
+        <label for="admin-token">管理口令</label>
+        <div class="login-row">
+          <input id="admin-token" name="token" type="password" autocomplete="current-password" required>
+          <button type="submit">进入后台</button>
+        </div>
+        <p class="form-error" id="login-error" role="alert"></p>
+      </form>
+    </section>
+
+    <section class="dashboard" id="dashboard" hidden>
+      <div class="dashboard-title">
+        <div>
+          <p class="eyebrow">Download analytics</p>
+          <h1>下载统计</h1>
+          <p id="updated-at">正在读取…</p>
+        </div>
+        <div class="dashboard-actions">
+          <button class="quiet-button" id="refresh-button" type="button">刷新</button>
+          <button class="quiet-button" id="logout-button" type="button">退出</button>
+        </div>
+      </div>
+
+      <div class="summary-grid" aria-label="累计统计">
+        <article class="summary-card accent"><span>累计开始</span><strong id="total-started">0</strong><small>点击下载按钮</small></article>
+        <article class="summary-card"><span>累计完成</span><strong id="total-completed">0</strong><small>已交给浏览器保存</small></article>
+        <article class="summary-card"><span>完成率</span><strong id="completion-rate">0%</strong><small>完成 ÷ 开始</small></article>
+        <article class="summary-card"><span>所选时段完成</span><strong id="range-completed">0</strong><small id="range-caption">最近 7 天</small></article>
+      </div>
+
+      <section class="panel timeline-panel">
+        <div class="panel-heading">
+          <div><span>时间趋势</span><h2>下载开始与完成</h2></div>
+          <div class="filters">
+            <label>范围
+              <select id="range-select">
+                <option value="86400000">最近 24 小时</option>
+                <option value="604800000" selected>最近 7 天</option>
+                <option value="2592000000">最近 30 天</option>
+                <option value="31536000000">最近 365 天</option>
+              </select>
+            </label>
+            <label>精度
+              <select id="granularity-select">
+                <option value="minute">分钟</option>
+                <option value="hour" selected>小时</option>
+                <option value="day">天</option>
+              </select>
+            </label>
+          </div>
+        </div>
+        <div class="legend"><span><i class="started-dot"></i>开始</span><span><i class="completed-dot"></i>完成</span></div>
+        <div class="timeline" id="timeline" aria-live="polite"></div>
+      </section>
+
+      <div class="data-grid">
+        <section class="panel">
+          <div class="panel-heading"><div><span>平台架构</span><h2>累计下载</h2></div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>安装包</th><th>开始</th><th>完成</th><th>完成率</th></tr></thead>
+              <tbody id="release-table"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading"><div><span>来源</span><h2>下载站点</h2></div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>站点</th><th>开始</th><th>完成</th></tr></thead>
+              <tbody id="source-table"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <section class="panel recent-panel">
+        <div class="panel-heading"><div><span>精确记录</span><h2>最近事件</h2></div><small>时间精确到秒，原始数据保留毫秒时间戳</small></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>本地时间</th><th>状态</th><th>安装包</th><th>来源</th><th>记录 ID</th></tr></thead>
+            <tbody id="recent-table"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <p class="privacy-note">仅保存匿名下载事件、平台架构、版本、站点来源和时间；不保存账号、IP 地址或设备标识。</p>
+    </section>
+  </main>
+
+  <footer>Yuniverse · 作者 <strong>Au_Cu</strong></footer>
+  <script src="./admin.js"></script>
+</body>
+</html>

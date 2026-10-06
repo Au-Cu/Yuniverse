@@ -1,6 +1,6 @@
 # Yuniverse
 
-`JUST大猫`、`JUST外星猫` 与 `珉鸟` 组成的柳智敏衍生桌宠小宇宙。`Yu` 对应柳智敏韩文名字中的音节，并与 `universe` 组合成 `Yuniverse`；名字不限定成员必须是猫或鸟，今后加入其他衍生形象也能自然容纳。运行打包后的程序不需要 Codex、ChatGPT、Node.js 或其他开发环境，也不会连接网络。
+`JUST大猫`、`JUST外星猫` 与 `珉鸟` 组成的柳智敏衍生桌宠小宇宙，作者为 `Au_Cu`。`Yu` 对应柳智敏韩文名字中的音节，并与 `universe` 组合成 `Yuniverse`；名字不限定成员必须是猫或鸟，今后加入其他衍生形象也能自然容纳。运行打包后的程序不需要 Codex、ChatGPT、Node.js 或其他开发环境，也不会连接网络。
 
 ## 下载
 
@@ -11,6 +11,8 @@
 - [GitHub Release v1.0.0](https://github.com/Au-Cu/Yuniverse/releases/tag/v1.0.0)
 
 官网会分架构提供 Windows 与 macOS 成品；体积较大的文件会依次下载、自动校验分片，再由浏览器合成为完整安装包。GitHub Release 同时保留各平台原始安装包和 Windows 便携版。
+
+官网会匿名记录下载开始和完成事件，保存 1.0.0 版本、平台架构、来源站点及服务端时间戳；不保存账号、IP 地址或设备标识。原始时间戳精确到毫秒，私有后台可按分钟、小时或天汇总。统计接口说明见 `website/yuniverse/DOWNLOAD_STATS.md`。
 
 ## 使用
 
@@ -51,6 +53,8 @@ npm run build
 `npm run build` 生成当前 Windows 架构的便携版；`npm run dist` 同时生成便携版与安装版。macOS 成品必须在对应的 macOS 构建机上生成；仓库中的跨平台工作流会分别使用原生 Intel 与 Apple Silicon 构建机进行打包和冒烟测试。
 
 项目固定使用 electron-builder 26.15.3。其原始 NSIS 模板遗漏了单一 ARM64 `useZip` 分支，`prebuild`/`predist` 会先运行一个严格匹配的局部修补；若上游模板发生变化，脚本会直接失败而不会生成空壳程序。
+
+安装包元数据中的作者与版权均标记为 `Au_Cu`，应用版本继续保持 `1.0.0`。
 
 ## 网站文案约定
 

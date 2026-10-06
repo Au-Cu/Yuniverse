@@ -264,6 +264,8 @@ footer { display: grid; grid-template-columns: 1fr 2fr auto; align-items: center
 .footer-brand { color: var(--ink); font-size: 15px; }
 .footer-brand .brand-mark { width: 27px; height: 27px; font-size: 13px; }
 footer p { margin: 0; text-align: center; }
+.author-watermark { color: #8b887f; letter-spacing: .025em; white-space: nowrap; }
+.author-watermark strong { color: var(--ink); font-weight: 760; }
 
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }

@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "JUST大猫、JUST外星猫与珉鸟组成的柳智敏衍生桌宠小宇宙",
   "main": "src/main.js",
-  "author": "Yuniverse",
+  "author": {
+    "name": "Au_Cu"
+  },
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
@@ -25,6 +27,7 @@
   "build": {
     "appId": "cn.justcats.desktop.pet",
     "productName": "Yuniverse",
+    "copyright": "Copyright © 2026 Au_Cu",
     "asar": true,
     "compression": "normal",
     "directories": {
